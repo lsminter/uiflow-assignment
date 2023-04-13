@@ -11,7 +11,8 @@ import {useState, useEffect} from 'react';
  */
  export default function App () {
   const [items, setItems] = useState([])
-  const [showMore, setShowMore] = useState('')
+  const [toggledButtonId, setToggledButtonId] = useState(null);
+
   
   useEffect( () => {
     fetch('https://fakestoreapi.com/products')
@@ -19,31 +20,32 @@ import {useState, useEffect} from 'react';
       .then(data => setItems(data))
   }, [])
 
-  // const handleButton = i => {
-  //   setShowMore(prevState => {})
-  // }
+  console.log(items)
+
+  function toggleButton(button) {
+    setToggledButtonId(button.id);
+  }
+
   
   return (
     <ul>
-      {items.map((x, i) => (
+      {items.map((x) => {
+        const isToggled = x.id === toggledButtonId
+        return (
         <div>
-          <ul key={i}>
-            {!showMore 
-              ? x.title 
-              : 
-              <div>
-                <div>{x.title}</div>
-                <div>{x.description}</div>
-              </div>
-            }
-            <button onClick={() => setShowMore(!showMore)}>{!showMore ? "Show More" : "Show Less"}</button>
-            {/* One button updates the state for all of the buttons instead of just the one.*/}
-            {/* <button onClick={() => handleButton(i)}>{!showMore ? "Show More" : "Show Less"}</button> */}
+          <ul>
+            {x.title}
           </ul>
+          <button 
+              key={x.id}
+              onClick={() => toggleButton(x)}>
+                {!isToggled ? "Show Description" : "Hide Description"}
+            </button>
+            {isToggled ? x.description : ""}
           <ul>Price: {x.price}</ul>
           <img src={x.image} alt="text" class="img"/>
         </div>
-      ))}
+      )})}
     </ul>
   );
 };
