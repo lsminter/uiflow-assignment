@@ -20,12 +20,9 @@ import {useState, useEffect} from 'react';
       .then(data => setItems(data))
   }, [])
 
-  console.log(items)
-
   function toggleButton(button) {
     setToggledButtonId(button.id);
   }
-
   
   return (
     <ul>
