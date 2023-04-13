@@ -38,7 +38,7 @@ import {useState, useEffect} from 'react';
           </ul>
           <button 
               key={x.id}
-              onClick={() => toggleButton(x)}>
+              onClick={() => !isToggled ? toggleButton(x) : toggleButton("")}>
                 {!isToggled ? "Show Description" : "Hide Description"}
             </button>
             {isToggled ? x.description : ""}
